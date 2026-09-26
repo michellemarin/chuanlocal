@@ -25,11 +25,12 @@
 .btn-outline:hover { background: var(--color-white); color: var(--color-navy-900); }
 
 .site-header {
-  position: relative; z-index: var(--layer-sticky);
+  position: absolute; top: 0; left: 0; right: 0; z-index: var(--layer-sticky);
   display: flex; align-items: center; justify-content: space-between; gap: var(--space-100);
   padding: var(--space-100) var(--spacing-container-padding);
-  background: var(--color-background-page);
+  background: transparent;
 }
+.site-header .lang-switch a { border-color: var(--color-navy-500); }
 .site-header .brand { display: inline-flex; align-items: center; min-height: var(--layout-touch-target); }
 .site-header .logo-lockup { width: var(--layout-header-logo-width); max-width: 55vw; height: auto; display: block; color: var(--color-foreground-primary); }
 
@@ -37,7 +38,7 @@
 .nav > summary::-webkit-details-marker { display: none; }
 .nav-panel {
   position: absolute; left: 0; right: 0; top: 100%;
-  background: var(--color-background-page); box-shadow: var(--elevation-md);
+  background: var(--color-navy-900); box-shadow: var(--elevation-md);
   padding: var(--space-100) var(--spacing-container-padding) var(--space-150);
   display: grid; gap: var(--space-100);
 }
@@ -171,3 +172,13 @@ main h2:lang(zh), main h2:lang(ja), main h2:lang(ko), main :lang(zh) h2, main :l
   .anim .hero-content > * { animation: none; }
   .path-card, .path-card:hover, .path-card .icon-arrow { transition: none; transform: none; }
 }
+
+/* Footer credit links: wrap within 800px; a line draws in from the left on hover (owner, after michellemarin.com). */
+.site-footer p { max-width: var(--layout-intro-width); margin-inline: auto; }
+.site-footer .caption a { position: relative; display: inline-block; text-decoration: none; }
+.site-footer .caption a::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: var(--border-width-default); width: 0;
+  background: currentColor; transition: width var(--motion-fast) ease-in-out;
+}
+.site-footer .caption a:hover::after, .site-footer .caption a:focus-visible::after { width: 100%; }
+@media (prefers-reduced-motion: reduce) { .site-footer .caption a::after { transition: none; } }

@@ -44,7 +44,7 @@ ${HOME_LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${q(l)}">`)
     css: ['/app.css', '/home.css'],
     body: `<div class="splash" id="splash" aria-hidden="true">${mark('logo-mark', '')}</div>
 
-<header class="site-header">
+<header class="site-header on-navy">
   <a class="brand" href="${q(lang)}" aria-label="ChuanLocal">${lockup()}</a>
   <details class="nav">
     <summary class="nav-toggle" aria-label="${esc(c.menu)}">${icon('menu', { cls: 'icon-lg' })}</summary>
