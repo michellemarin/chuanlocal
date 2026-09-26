@@ -1,5 +1,7 @@
 import { Hono } from 'hono';
 import QRCode from 'qrcode';
+import { homePage } from './home.js';
+import { HOME_LANGS } from './home-copy.js';
 import { pickLang } from './i18n.js';
 import { editPage, menuPage, notFoundPage, signPage, startPage } from './pages.js';
 import { LANGS, translateStrings } from './translate.js';
@@ -29,11 +31,22 @@ async function shopItems(db, shopId) {
   return results;
 }
 
+const touch = (db, shopId) => db.prepare("UPDATE shops SET updated_at = datetime('now') WHERE id = ?").bind(shopId).run();
+
 const html = (c, body, status = 200) => c.html(body, status, { 'cache-control': 'no-store' });
 
 // ---------- Vendor pages ----------
 
-app.get('/', (c) => html(c, startPage()));
+// Demo stall used as the example on the home page.
+const EXAMPLE_SLUG = 'zk596ie';
+
+app.get('/', (c) => {
+  const lang = pickLang(c.req.query('lang'), c.req.header('accept-language'), HOME_LANGS, 'th');
+  const exampleLang = LANGS.includes(lang) ? lang : 'en';
+  return html(c, homePage({ lang, exampleUrl: `/m/${EXAMPLE_SLUG}?lang=${exampleLang}` }));
+});
+
+app.get('/start', (c) => html(c, startPage()));
 
 app.post('/create', async (c) => {
   const form = await c.req.parseBody();
@@ -67,7 +80,8 @@ app.get('/sign/:secret', async (c) => {
   const shop = await shopBySecret(c.env.DB, c.req.param('secret'));
   if (!shop) return html(c, notFoundPage(), 404);
   const menuUrl = `${new URL(c.req.url).origin}/m/${shop.slug}`;
-  const qrSvg = await QRCode.toString(menuUrl, { type: 'svg', margin: 1, errorCorrectionLevel: 'M' });
+  // Quiet zone of 4 modules, dark on white, nothing inside the code (design.md: QR sign).
+  const qrSvg = await QRCode.toString(menuUrl, { type: 'svg', margin: 4, errorCorrectionLevel: 'M' });
   return html(c, signPage({ shop, menuUrl, qrSvg }));
 });
 
@@ -142,7 +156,7 @@ app.post('/api/:secret/save', async (c) => {
   }
 
   const keepIds = new Set(incoming.filter((it) => it.id != null && existing.has(it.id)).map((it) => it.id));
-  const stmts = [db.prepare('UPDATE shops SET name_th = ?, name_tr = ? WHERE id = ?').bind(name, JSON.stringify(newShopTr), shop.id)];
+  const stmts = [db.prepare("UPDATE shops SET name_th = ?, name_tr = ?, updated_at = datetime('now') WHERE id = ?").bind(name, JSON.stringify(newShopTr), shop.id)];
   for (const id of existing.keys()) {
     if (!keepIds.has(id)) stmts.push(db.prepare('DELETE FROM items WHERE id = ? AND shop_id = ?').bind(id, shop.id));
   }
@@ -188,6 +202,7 @@ app.post('/api/:secret/special', async (c) => {
     .prepare('UPDATE items SET is_special = CASE WHEN id = ? THEN 1 ELSE 0 END WHERE shop_id = ?')
     .bind(Number.isInteger(id) ? id : -1, shop.id)
     .run();
+  await touch(db, shop.id);
   return c.json({ ok: true });
 });
 
@@ -198,6 +213,7 @@ app.post('/api/:secret/soldout', async (c) => {
   const { id, soldOut } = await c.req.json().catch(() => ({}));
   if (!Number.isInteger(id)) return c.json({ error: 'bad request' }, 400);
   await db.prepare('UPDATE items SET sold_out = ? WHERE id = ? AND shop_id = ?').bind(soldOut ? 1 : 0, id, shop.id).run();
+  await touch(db, shop.id);
   return c.json({ ok: true });
 });
 

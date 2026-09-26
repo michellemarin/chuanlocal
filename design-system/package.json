@@ -1,0 +1,13 @@
+{
+  "name": "@chuanlocal/design-system",
+  "version": "1.0.0",
+  "description": "ChuanLocal design tokens as CSS custom properties. Generated from tokens.json.",
+  "main": "tokens.css",
+  "files": [
+    "tokens.css",
+    "tokens.json",
+    "README.md"
+  ],
+  "license": "UNLICENSED",
+  "private": true
+}

@@ -1,0 +1,137 @@
+/* ChuanLocal home page. Every value is a token (tokens.css). */
+
+/* Scope that flips a block to the dark-theme roles: white text only on Chuan Navy. */
+.on-navy {
+  --color-foreground-primary: var(--color-white);
+  --color-foreground-secondary: var(--color-navy-200);
+  --color-foreground-link: var(--color-white);
+  --color-accent-brand: var(--color-white);
+  --color-accent-brand-hover: var(--color-navy-100);
+  --color-foreground-on-brand: var(--color-navy-900);
+  --color-foreground-on-brand-hover: var(--color-navy-900);
+  --color-border-strong: var(--color-white);
+  --focus-color: var(--color-white);
+  background: var(--color-navy-900);
+  color: var(--color-foreground-primary);
+}
+.on-navy .btn-secondary:hover { background: var(--color-navy-800); }
+
+/* ---------- Header ---------- */
+
+.site-header {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-100);
+  padding: var(--space-100) var(--spacing-container-padding);
+  max-width: var(--breakpoint-xl); margin: 0 auto;
+}
+.site-header .brand { display: inline-flex; align-items: center; min-height: var(--layout-touch-target); }
+.site-header .logo-lockup { width: var(--layout-header-logo-width); height: auto; display: block; color: var(--color-foreground-primary); }
+.site-langs { max-width: var(--breakpoint-xl); margin: 0 auto; padding: 0 var(--spacing-container-padding) var(--space-100); align-items: center; }
+.site-langs > .icon { color: var(--color-foreground-secondary); margin-right: var(--space-25); }
+
+/* ---------- Shared section pieces ---------- */
+
+main h2 {
+  font-size: var(--type-display-size); font-weight: var(--type-display-weight);
+  line-height: var(--type-display-line-height); letter-spacing: var(--type-display-letter-spacing);
+  margin: 0 0 var(--space-150); text-wrap: balance;
+}
+main h2:lang(th), main :lang(th) h2 { font-size: var(--type-heading-thai-size); font-weight: var(--type-heading-thai-weight); line-height: var(--type-heading-thai-line-height); letter-spacing: normal; }
+main h2:lang(zh), main h2:lang(ja), main h2:lang(ko), main :lang(zh) h2, main :lang(ja) h2, main :lang(ko) h2 { letter-spacing: normal; }
+.overline::before {
+  content: ""; display: inline-block; width: var(--space-50); height: var(--space-50);
+  border-radius: var(--radius-full); background: var(--color-accent-highlight);
+  margin-right: var(--space-50); vertical-align: middle;
+}
+
+.media { position: relative; overflow: hidden; background: var(--color-navy-850); }
+.media img { position: absolute; left: 0; top: -10%; width: 100%; height: 120%; object-fit: cover; will-change: transform; }
+.scrim { position: absolute; inset: 0; background: var(--color-scrim); }
+
+/* ---------- 1. Hero ---------- */
+
+.hero { position: relative; min-height: var(--layout-hero-min-height); display: flex; align-items: flex-end; overflow: hidden; }
+.hero .media { position: absolute; inset: 0; }
+.hero-content {
+  position: relative; width: 100%; max-width: var(--breakpoint-xl); margin: 0 auto;
+  padding: var(--space-600) var(--spacing-container-padding) var(--space-400);
+}
+.hero h1 {
+  font-size: var(--type-display-size); font-weight: var(--type-display-weight);
+  line-height: var(--type-display-line-height); letter-spacing: var(--type-display-letter-spacing);
+  margin: 0 0 var(--space-150); max-width: var(--layout-text-width); text-wrap: balance;
+}
+.hero h1:lang(th), :lang(th) > .hero h1 { font-size: var(--type-heading-thai-size); line-height: var(--type-heading-thai-line-height); letter-spacing: normal; }
+.hero .lede { max-width: var(--layout-text-width); margin-bottom: var(--space-200); }
+.hero .overline { color: var(--color-foreground-primary); }
+
+.anim .hero-content > * { animation: rise-in var(--motion-rise) ease both; }
+.anim .hero-content > :nth-child(2) { animation-delay: calc(var(--motion-rise) / 6); }
+.anim .hero-content > :nth-child(3) { animation-delay: calc(var(--motion-rise) / 3); }
+.anim .hero-content > :nth-child(4) { animation-delay: calc(var(--motion-rise) / 2); }
+
+/* ---------- 2. Intro ---------- */
+
+.intro { background: var(--color-background-subtle); padding: var(--space-400) var(--spacing-container-padding); }
+.intro p {
+  max-width: var(--layout-intro-width); margin: 0 auto; text-align: center;
+  font-size: var(--type-heading-1-size); line-height: var(--type-body-line-height); font-weight: var(--font-weight-medium);
+  text-wrap: pretty;
+}
+
+/* ---------- 3–5. Story ---------- */
+
+.story, .how {
+  display: grid; grid-template-columns: 1fr; max-width: var(--breakpoint-xl); margin: 0 auto;
+  border-bottom: var(--border-width-default) solid var(--color-border-subtle);
+}
+.story .media, .how .media { min-height: var(--layout-story-media-height); }
+.story-text, .how-text { padding: var(--space-300) var(--spacing-container-padding); align-self: center; }
+.story-text p:last-child { max-width: var(--layout-text-width); font-size: var(--type-heading-1-size); line-height: var(--type-body-line-height); color: var(--color-foreground-secondary); }
+
+/* ---------- 6–7. How it works ---------- */
+
+.how.subtle { background: var(--color-background-subtle); max-width: none; }
+.how.subtle > * { max-width: calc(var(--breakpoint-xl) / 2); }
+.steps { list-style: none; margin: 0 0 var(--space-150); padding: 0; border-top: var(--border-width-default) solid var(--color-border-subtle); }
+.steps li { display: grid; grid-template-columns: var(--space-300) 1fr; padding: var(--space-150) 0; border-bottom: var(--border-width-default) solid var(--color-border-subtle); }
+.steps .n { font-weight: var(--font-weight-semibold); font-variant-numeric: tabular-nums; color: var(--color-foreground-secondary); }
+.steps strong { display: block; font-size: var(--type-item-name-size); font-weight: var(--type-item-name-weight); line-height: var(--type-item-name-line-height); }
+.steps .d { display: block; color: var(--color-foreground-secondary); }
+.how .caption { margin-bottom: var(--space-150); }
+
+/* ---------- 8. Final CTA ---------- */
+
+.final { position: relative; overflow: hidden; text-align: center; }
+.final .media { position: absolute; inset: 0; }
+.final-content { position: relative; padding: var(--space-600) var(--spacing-container-padding); max-width: var(--layout-intro-width); margin: 0 auto; }
+.final .logo-mark { width: var(--icon-xl); height: var(--icon-xl); margin: 0 auto var(--space-150); display: block; color: var(--color-white); }
+.final p { font-size: var(--type-heading-1-size); margin-bottom: var(--space-200); }
+
+/* ---------- Footer ---------- */
+
+.site-footer { max-width: var(--breakpoint-xl); margin: 0 auto; padding: var(--space-300) var(--spacing-container-padding); text-align: center; }
+.site-footer .logo-lockup { width: var(--layout-header-logo-width); height: auto; color: var(--color-foreground-primary); margin-bottom: var(--space-100); }
+.site-footer .caption a { color: var(--color-foreground-secondary); }
+
+/* ---------- Larger screens (breakpoint.lg = 1024px, breakpoint.sm = 640px) ---------- */
+
+@media (min-width: 640px) {
+  .intro { padding: var(--space-600) var(--spacing-container-padding); }
+}
+@media (min-width: 1024px) {
+  .site-header, .site-langs { padding-inline: var(--space-300); }
+  .hero-content { padding: var(--space-800) var(--space-300) var(--space-600); }
+  .story, .how { grid-template-columns: 1fr 1fr; }
+  .how { grid-template-columns: 2fr 3fr; }
+  .how.flip { grid-template-columns: 3fr 2fr; }
+  .story.flip .media, .how.flip .media { order: 2; }
+  .story-text, .how-text { padding: var(--space-600) var(--space-400); }
+  .how.subtle > * { max-width: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .media img { top: 0; height: 100%; transform: none !important; }
+  .anim .hero-content > * { animation: none; }
+}
+
+.hero .btn-row > *, .how-text .btn, .final .btn { flex: 0 0 auto; }

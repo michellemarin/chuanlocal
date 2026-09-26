@@ -1,0 +1,35 @@
+/* The A4 QR sign. Black ink first: navy prints as near-black on a mono printer. */
+
+body { background: var(--color-background-subtle); }
+
+.sign-tools { max-width: var(--layout-app-width); margin: var(--space-100) auto; padding: 0 var(--spacing-container-padding); display: flex; gap: var(--space-50); flex-wrap: wrap; }
+.sign-tools > * { flex: 1 1 auto; }
+
+.sheet {
+  background: var(--color-white); color: var(--color-navy-900);
+  width: var(--print-page-width); min-height: var(--print-page-height); margin: var(--space-100) auto;
+  padding: var(--print-page-margin);
+  display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+  text-align: center; gap: var(--space-200);
+}
+.sheet-head h1 { font-size: var(--type-display-size); font-weight: var(--type-display-weight); line-height: var(--type-thai-line-height); margin: 0; }
+.sheet-en { font-size: var(--type-heading-1-size); color: var(--color-navy-700); }
+.sheet-qr { width: var(--print-qr-size); height: var(--print-qr-size); }
+.sheet-qr svg { width: 100%; height: 100%; display: block; }
+.sheet-langs { display: flex; align-items: center; justify-content: center; gap: var(--space-50); }
+.sheet-langs img { height: var(--icon-md); width: auto; border-radius: var(--radius-sm); }
+.sheet-langs .icon-lg { color: var(--color-navy-900); margin-right: var(--space-50); }
+.sheet-live { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--space-50); margin: 0; font-size: var(--type-caption-size); color: var(--color-navy-700); }
+.sheet-live [lang="th"]::before { content: "·"; margin-right: var(--space-50); }
+.sheet-lines { font-size: var(--type-label-size); line-height: var(--type-body-line-height); }
+.sheet-lines [lang="en"] { font-size: var(--type-heading-1-size); font-weight: var(--font-weight-bold); margin-bottom: var(--space-50); }
+.sheet-lines [lang="th"] { font-size: var(--type-heading-1-size); font-weight: var(--font-weight-semibold); margin-top: var(--space-50); }
+.sheet-foot { display: flex; flex-direction: column; align-items: center; gap: var(--space-50); }
+.sheet-foot .logo-lockup { width: var(--print-logo-sign); height: auto; color: var(--color-navy-900); }
+
+@media print {
+  @page { size: A4; margin: 0; }
+  body { background: var(--color-white); }
+  .sign-tools { display: none; }
+  .sheet { margin: 0; width: auto; min-height: 100vh; }
+}
