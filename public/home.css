@@ -18,10 +18,13 @@
   color: var(--color-foreground-primary);
 }
 
+/* On navy, the secondary button keeps a white outline (white is not a colour accent). */
+.on-navy .btn-secondary { border-color: var(--color-white); }
+
 /* ---------- Header + navigation ---------- */
 
 /* Header button: white pill like the CTA button, with the same glow on hover. */
-.btn-outline { background: var(--color-white); color: var(--color-navy-900); border-color: var(--color-white); }
+.btn-outline { background: var(--color-white); color: var(--color-navy-900); }
 .btn-outline:hover { background: var(--color-white); color: var(--color-navy-900); }
 
 .site-header {

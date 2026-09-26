@@ -76,7 +76,7 @@ p { margin: 0 0 var(--spacing-stack); }
   font: inherit; font-size: var(--type-label-size); font-weight: var(--type-label-weight);
   text-decoration: none; cursor: pointer;
   background: var(--color-background-surface); color: var(--color-foreground-primary);
-  border: var(--border-width-default) solid var(--color-border-strong);
+  border: var(--border-width-default) solid transparent;
   box-shadow: var(--elevation-glass), var(--elevation-glow);
   transition: transform var(--motion-fast) ease, box-shadow var(--motion-fast) ease, background-color var(--motion-fast) ease;
 }
@@ -84,9 +84,9 @@ p { margin: 0 0 var(--spacing-stack); }
 .btn:active { transform: none; }
 .btn .icon-arrow { transition: transform var(--motion-fast) ease; }
 .btn:hover .icon-arrow { transform: translateX(var(--motion-nudge)); }
-.btn-primary { background: var(--color-accent-brand); color: var(--color-foreground-on-brand); border-color: var(--color-accent-brand); }
-.btn-primary:hover, .btn-primary:active { background: var(--color-accent-brand-hover); border-color: var(--color-accent-brand-hover); color: var(--color-foreground-on-brand-hover); }
-.btn-secondary:hover { background: var(--color-white); color: var(--color-navy-900); border-color: var(--color-white); }
+.btn-primary { background: var(--color-accent-brand); color: var(--color-foreground-on-brand); }
+.btn-primary:hover, .btn-primary:active { background: var(--color-accent-brand-hover); color: var(--color-foreground-on-brand-hover); }
+.btn-secondary:hover { background: var(--color-white); color: var(--color-navy-900); }
 .btn-block { width: 100%; }
 .btn[disabled] { opacity: var(--opacity-disabled); cursor: progress; }
 .btn-row { display: flex; gap: var(--space-50); flex-wrap: wrap; }
@@ -190,7 +190,7 @@ input::placeholder { color: var(--color-foreground-secondary); }
 .item-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-50); margin-top: var(--space-100); }
 .item-actions .btn { padding-inline: var(--space-50); }
 .item-card.is-special { border-left: var(--border-width-emphasis) solid var(--color-accent-highlight); }
-.btn[aria-pressed="true"] { border: var(--border-width-emphasis) solid var(--color-border-strong); background: var(--color-background-subtle); }
+.btn[aria-pressed="true"] { background: var(--color-background-subtle); box-shadow: var(--elevation-glass), var(--elevation-glow-hover); }
 .btn[aria-pressed="true"] .icon { color: var(--color-accent-highlight); }
 .sticky-bar {
   position: sticky; bottom: 0; z-index: var(--layer-sticky);
