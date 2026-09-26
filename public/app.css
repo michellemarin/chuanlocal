@@ -80,13 +80,13 @@ p { margin: 0 0 var(--spacing-stack); }
   box-shadow: var(--elevation-glass), var(--elevation-glow);
   transition: transform var(--motion-fast) ease, box-shadow var(--motion-fast) ease, background-color var(--motion-fast) ease;
 }
-.btn:hover { transform: translateY(var(--motion-lift)); box-shadow: var(--elevation-glass), var(--elevation-glow-hover); }
+.btn:hover { transform: translateY(var(--motion-lift)); box-shadow: var(--elevation-glow-hover); }
 .btn:active { transform: none; }
 .btn .icon-arrow { transition: transform var(--motion-fast) ease; }
 .btn:hover .icon-arrow { transform: translateX(var(--motion-nudge)); }
 .btn-primary { background: var(--color-accent-brand); color: var(--color-foreground-on-brand); border-color: var(--color-accent-brand); }
 .btn-primary:hover, .btn-primary:active { background: var(--color-accent-brand-hover); border-color: var(--color-accent-brand-hover); color: var(--color-foreground-on-brand-hover); }
-.btn-secondary:hover { background: var(--color-background-subtle); }
+.btn-secondary:hover { background: var(--color-white); color: var(--color-navy-900); border-color: var(--color-white); }
 .btn-block { width: 100%; }
 .btn[disabled] { opacity: var(--opacity-disabled); cursor: progress; }
 .btn-row { display: flex; gap: var(--space-50); flex-wrap: wrap; }
@@ -157,13 +157,14 @@ input::placeholder { color: var(--color-foreground-secondary); }
   margin-block: calc((var(--layout-touch-target) - var(--layout-pill-height)) / 2);
   padding: 0 var(--spacing-chip-inline); border-radius: var(--radius-chip);
   border: var(--border-width-default) solid var(--color-border-subtle);
-  background: var(--color-background-surface); box-shadow: var(--elevation-glass), var(--elevation-glow);
+  background: transparent; box-shadow: var(--elevation-glass);
   text-decoration: none; color: var(--color-foreground-primary); font-size: var(--type-caption-size);
   transition: transform var(--motion-fast) ease, box-shadow var(--motion-fast) ease;
 }
 /* Keep a 48px tap area around the smaller pill. */
 .lang-switch a::after { content: ""; position: absolute; left: 0; right: 0; top: calc((var(--layout-touch-target) - var(--layout-pill-height)) / -2); bottom: calc((var(--layout-touch-target) - var(--layout-pill-height)) / -2); }
-.lang-switch a:hover { transform: translateY(var(--motion-lift)); box-shadow: var(--elevation-glass), var(--elevation-glow-hover); }
+.lang-switch a:hover { transform: translateY(var(--motion-lift)); background: var(--color-white); color: var(--color-navy-900); border-color: var(--color-white); box-shadow: var(--elevation-glow-hover); }
+.lang-switch a[aria-current="true"]:hover { background: var(--color-white); color: var(--color-navy-900); }
 .lang-switch a[aria-current="true"] { background: var(--color-accent-brand); border-color: var(--color-accent-brand); color: var(--color-foreground-on-brand); }
 
 .row { padding: var(--spacing-list-row) 0; border-bottom: var(--border-width-default) solid var(--color-border-subtle); }

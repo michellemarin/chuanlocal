@@ -20,6 +20,10 @@
 
 /* ---------- Header + navigation ---------- */
 
+/* Header button: white pill like the CTA button, with the same glow on hover. */
+.btn-outline { background: var(--color-white); color: var(--color-navy-900); border-color: var(--color-white); }
+.btn-outline:hover { background: var(--color-white); color: var(--color-navy-900); }
+
 .site-header {
   position: relative; z-index: var(--layer-sticky);
   display: flex; align-items: center; justify-content: space-between; gap: var(--space-100);
@@ -50,6 +54,7 @@ main h2:lang(th), main :lang(th) h2 { font-size: var(--type-heading-thai-size); 
 main h2:lang(zh), main h2:lang(ja), main h2:lang(ko), main :lang(zh) h2, main :lang(ja) h2, main :lang(ko) h2 { letter-spacing: normal; }
 
 .media { position: relative; overflow: hidden; background: var(--color-navy-850); }
+.media video { position: absolute; left: 0; top: -10%; width: 100%; height: 120%; object-fit: cover; will-change: transform; }
 .media img { position: absolute; left: 0; top: -10%; width: 100%; height: 120%; object-fit: cover; will-change: transform; }
 .scrim { position: absolute; inset: 0; background: var(--color-scrim); }
 
@@ -113,8 +118,9 @@ main h2:lang(zh), main h2:lang(ja), main h2:lang(ko), main :lang(zh) h2, main :l
 
 /* ---------- 8. Final CTA ---------- */
 
-.final { text-align: center; }
-.final-content { padding: var(--space-400) var(--spacing-container-padding); max-width: var(--layout-intro-width); margin: 0 auto; }
+.final { position: relative; overflow: hidden; text-align: center; }
+.final .media { position: absolute; inset: 0; }
+.final-content { position: relative; padding: var(--space-400) var(--spacing-container-padding); max-width: var(--layout-intro-width); margin: 0 auto; }
 .final .logo-mark { width: var(--icon-xl); height: var(--icon-xl); margin: 0 auto var(--space-150); display: block; color: var(--color-white); }
 .final p { font-size: var(--type-heading-1-size); margin-bottom: var(--space-200); }
 
@@ -135,7 +141,7 @@ main h2:lang(zh), main h2:lang(ja), main h2:lang(ko), main :lang(zh) h2, main :l
   box-shadow: var(--elevation-glass), var(--elevation-glow);
   transition: transform var(--motion-fast) ease, box-shadow var(--motion-fast) ease;
 }
-.path-card:hover { transform: translateY(var(--motion-lift)); box-shadow: var(--elevation-glass), var(--elevation-glow-hover); }
+.path-card:hover { transform: translateY(var(--motion-lift)); border-color: var(--color-white); box-shadow: var(--elevation-glow-hover); }
 .path-card > span { display: grid; gap: var(--space-25); flex: 1; }
 .path-card strong { font-size: var(--type-item-name-size); }
 .path-card .icon-arrow { transition: transform var(--motion-fast) ease; }
@@ -161,7 +167,7 @@ main h2:lang(zh), main h2:lang(ja), main h2:lang(ko), main :lang(zh) h2, main :l
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .media img { top: 0; height: 100%; transform: none !important; }
+  .media img, .media video { top: 0; height: 100%; transform: none !important; }
   .anim .hero-content > * { animation: none; }
   .path-card, .path-card:hover, .path-card .icon-arrow { transition: none; transform: none; }
 }

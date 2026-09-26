@@ -39,10 +39,14 @@
     document.addEventListener('click', function (e) { if (!desktop.matches && nav.open && !nav.contains(e.target)) nav.open = false; });
   }
 
+  // ----- Hero video: stills only for reduced motion or data saver -----
+  var vid = document.querySelector('.hero video');
+  if (vid && (reduce || (navigator.connection && navigator.connection.saveData))) { vid.removeAttribute('autoplay'); vid.pause(); }
+
   // ----- Parallax: photos drift slower than the page -----
   if (reduce) return;
   var strength = parseFloat(css.getPropertyValue('--motion-parallax-strength')) || 0.18;
-  var imgs = [].slice.call(document.querySelectorAll('[data-parallax] img'));
+  var imgs = [].slice.call(document.querySelectorAll('[data-parallax] img, [data-parallax] video'));
   if (!imgs.length) return;
   var ticking = false;
   function update() {

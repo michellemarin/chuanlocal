@@ -83,6 +83,7 @@ async function llmBatch(env, model, strings, lang, type) {
     ],
     max_tokens: 8000,
     temperature: 0.1,
+    reasoning: { effort: 'low' },
   });
   return parseKeyed(aiText(res), strings);
 }

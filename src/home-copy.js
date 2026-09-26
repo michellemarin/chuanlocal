@@ -411,6 +411,9 @@ export const COPY = {
 };
 
 // Free Unsplash photos (Unsplash License, not Unsplash+). Candid, not staged.
+// Hero video: "Bustling Thai Night Market Street Food Stall" (Pexels License), https://www.pexels.com/video/29162583/
+export const HERO_VIDEO = { by: 'Pexels', page: 'https://www.pexels.com/video/bustling-thai-night-market-street-food-stall-29162583/' };
+
 export const PHOTOS = {
   hero: { id: 'photo-1552912470-ee2e96439539', by: 'Vernon Raineil Cenzon', page: 'https://unsplash.com/photos/QAkqxrH6mvc' },
   problem: { id: 'photo-1662694385995-b3509ea9592b', by: 'Markus Winkler', page: 'https://unsplash.com/photos/rp_De2z7Wgc' },
@@ -418,5 +421,6 @@ export const PHOTOS = {
   origin: { id: 'photo-1568649479452-4fa420ed8256', by: 'YingChu Chen', page: 'https://unsplash.com/photos/QMGGhIkljKo' },
   vendors: { id: 'photo-1758346972369-6f3e57961085', by: 'Kelvin Zyteng', page: 'https://unsplash.com/photos/FU2GsnrycLk' },
   quote: { id: 'photo-1550487221-3750d2cb0b3c', by: 'Waranont (Joe)', page: 'https://unsplash.com/photos/s3E4flC32RE' },
-  visitors: { id: 'photo-1750635409983-78ca6a8cf324', by: 'Kaden Taylor', page: 'https://unsplash.com/photos/k8dwH-poJ2c' },
+  visitors: { id: 'photo-1558060370-d644479cb6f7', by: 'Huy Hung Trinh', page: 'https://unsplash.com/photos/zoyBqT7ytLU' },
+  final: { id: 'photo-1750635409983-78ca6a8cf324', by: 'Kaden Taylor', page: 'https://unsplash.com/photos/k8dwH-poJ2c' },
 };

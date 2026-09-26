@@ -1,5 +1,5 @@
 import { lockup, mark } from './brand.js';
-import { COPY, HOME_LABELS, HOME_LANGS, PHOTOS } from './home-copy.js';
+import { COPY, HERO_VIDEO, HOME_LABELS, HOME_LANGS, PHOTOS } from './home-copy.js';
 import { icon } from './icons.js';
 import { esc, layout } from './pages.js';
 
@@ -40,6 +40,7 @@ ${HOME_LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${q(l)}">`)
     title: c.title,
     lang,
     head,
+    theme: 'light',
     css: ['/app.css', '/home.css'],
     body: `<div class="splash" id="splash" aria-hidden="true">${mark('logo-mark', '')}</div>
 
@@ -49,14 +50,19 @@ ${HOME_LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${q(l)}">`)
     <summary class="nav-toggle" aria-label="${esc(c.menu)}">${icon('menu', { cls: 'icon-lg' })}</summary>
     <div class="nav-panel">
       <nav class="lang-switch" aria-label="${esc(c.lang)}">${langLinks}</nav>
-      <a class="btn btn-primary" href="/get-started?lang=${lang}">${esc(c.getStarted)} ${icon('arrow', { cls: 'icon icon-arrow' })}</a>
+      <a class="btn btn-outline" href="/get-started?lang=${lang}">${esc(c.getStarted)} ${icon('arrow', { cls: 'icon icon-arrow' })}</a>
     </div>
   </details>
 </header>
 
 <main>
   <section class="hero on-navy">
-    ${photo('hero', { eager: true })}
+    <div class="media" data-parallax>
+      <video autoplay muted loop playsinline preload="metadata" poster="${src(PHOTOS.hero.id, 1600)}" aria-hidden="true">
+        <source src="/video/hero.webm" type="video/webm">
+        <source src="/video/hero.mp4" type="video/mp4">
+      </video>
+    </div>
     <div class="scrim"></div>
     <div class="hero-content">
       <p class="overline"><span lang="th">ชวน</span> · ChuanLocal</p>
@@ -131,6 +137,8 @@ ${HOME_LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${q(l)}">`)
   </section>
 
   <section class="final on-navy">
+    ${photo('final')}
+    <div class="scrim"></div>
     <div class="final-content">
       ${mark('logo-mark', '')}
       <h2>${esc(c.finalTitle)}</h2>
@@ -143,7 +151,7 @@ ${HOME_LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${q(l)}">`)
 <footer class="site-footer">
   ${lockup()}
   <p>${esc(c.footer)}</p>
-  <p class="caption">${esc(c.photos)} ${credits}</p>
+  <p class="caption">${esc(c.photos)} ${credits} · Video: <a href="${HERO_VIDEO.page}" rel="noopener">Pexels</a></p>
 </footer>`,
   });
 }
