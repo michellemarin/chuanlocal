@@ -1,7 +1,7 @@
 import { lockup, mark } from './brand.js';
 import { COPY, HERO_VIDEO, HOME_LABELS, HOME_LANGS, PHOTOS } from './home-copy.js';
 import { icon } from './icons.js';
-import { esc, layout } from './pages.js';
+import { ASSET_V, esc, layout } from './pages.js';
 
 const WIDTHS = [640, 1024, 1600, 2400];
 // breakpoint.lg from tokens.json (media conditions can't read CSS variables).
@@ -34,7 +34,7 @@ export function homePage({ lang, exampleUrl }) {
 ${HOME_LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${q(l)}">`).join('')}
 <meta name="description" content="${esc(c.heroSub)}">
 <link rel="preconnect" href="https://images.unsplash.com">
-<script src="/home.js" defer></script>`;
+<script src="/home.js?v=${ASSET_V}" defer></script>`;
 
   return layout({
     title: c.title,

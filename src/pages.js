@@ -24,14 +24,17 @@ export function fontLinks(langs = []) {
   return `<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="${href}">`;
 }
 
+// Bump on deploy so browsers fetch fresh CSS and JS.
+export const ASSET_V = '2026092703';
+
 export function layout({ title, lang = 'th', body, head = '', fonts = [], css = ['/app.css'], theme = '' }) {
   return `<!doctype html><html lang="${esc(lang)}"${theme ? ` data-theme="${theme}"` : ''}><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>${esc(title)}</title>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 ${fontLinks([lang, ...fonts])}
-<link rel="stylesheet" href="/tokens.css">
-${css.map((h) => `<link rel="stylesheet" href="${h}">`).join('')}
+<link rel="stylesheet" href="/tokens.css?v=${ASSET_V}">
+${css.map((h) => `<link rel="stylesheet" href="${h}?v=${ASSET_V}">`).join('')}
 ${head}</head>
 <body>${body}</body></html>`;
 }
