@@ -58,7 +58,8 @@ export function startPage({ error = '' } = {}) {
     body: `<main class="app">
 ${appHeader()}
 <h1>สร้างป้ายของร้านคุณ</h1>
-<p class="muted">พิมพ์รายการเป็นภาษาไทย แล้วพิมพ์ป้าย QR ติดที่ร้าน นักท่องเที่ยวสแกนแล้วอ่านเป็นภาษาของตัวเองได้ทันที ฟรี ไม่ต้องติดตั้งแอป ไม่ต้องสมัครสมาชิก</p>
+<p class="muted">เขียนรายการเป็นภาษาไทย แล้วปริ้นต์ป้าย QR ติดที่ร้าน ลูกค้าต่างชาติสแกนแล้วอ่านเป็นภาษาของตัวเองได้ทันที</p>
+<ul class="next-steps"><li>${icon('check')}ใช้เวลาไม่กี่นาที ไม่ต้องลงแอป ไม่ต้องสมัคร</li><li>${icon('check')}ได้ลิงก์ส่วนตัว เก็บไว้ใน LINE ของคุณ</li><li>${icon('check')}แปลให้อัตโนมัติ ถ้าคำไหนแปลแปลก ลูกค้ายังชี้ชื่อภาษาไทยได้</li></ul>
 ${error ? `<div class="alert" role="alert">${icon('alert')}<span>${esc(error)}</span></div>` : ''}
 <form method="post" action="/create">
   <fieldset style="border:0;padding:0;margin:0">
@@ -71,7 +72,7 @@ ${error ? `<div class="alert" role="alert">${icon('alert')}<span>${esc(error)}</
   </fieldset>
   <label for="name">ชื่อร้าน</label>
   <input id="name" name="name" required maxlength="80" placeholder="เช่น ร้านป้าแดง ข้าวมันไก่">
-  <p style="margin-top:var(--space-150)"><button class="btn btn-primary btn-block">สร้างป้ายของฉัน ${icon('arrow')}</button></p>
+  <p style="margin-top:var(--space-150)"><button class="btn btn-primary btn-block">สร้างป้ายของฉัน ${icon('arrow', { cls: 'icon icon-arrow' })}</button></p>
 </form>
 </main>`,
   });
@@ -109,7 +110,7 @@ ${
   isNew
     ? `<div class="alert" role="note">${icon('alert')}<div><strong>สำคัญ: เก็บลิงก์หน้านี้ไว้</strong><br>
 ลิงก์นี้ใช้แก้ไขรายการของคุณ ไม่มีรหัสผ่าน ถ้าลิงก์หายจะแก้ไขไม่ได้ และห้ามให้คนอื่น
-<div class="btn-row" style="margin-top:var(--space-100)"><a class="btn btn-primary" href="https://line.me/R/share?text=${encodeURIComponent(lineText)}">${icon('share')} ส่งลิงก์เข้า LINE ของฉัน</a>
+<div class="btn-row" style="margin-top:var(--space-100)"><a class="btn btn-secondary" href="https://line.me/R/share?text=${encodeURIComponent(lineText)}">${icon('share')} ส่งลิงก์เข้า LINE ของฉัน</a>
 <button type="button" class="btn btn-secondary" onclick="copyLink()">${icon('copy')} คัดลอกลิงก์</button></div></div></div>`
     : ''
 }
@@ -122,7 +123,7 @@ ${
 <input id="shopName" maxlength="80">
 
 <h2 class="section-heading">รายการ</h2>
-<p class="hint">${icon('star')} กด "พิเศษวันนี้" ครั้งเดียว บันทึกทันที</p>
+<p class="hint">${icon('star')} กด "พิเศษวันนี้" หรือ "หมด" ครั้งเดียว บันทึกทันที</p>
 <datalist id="sections"></datalist>
 <div id="items"></div>
 <button type="button" class="btn btn-secondary btn-block" onclick="addItem()">${icon('plus')} เพิ่มรายการ</button>
@@ -294,6 +295,9 @@ export function menuPage({ shop, items, lang, path }) {
     return {
       ...it,
       tName: lang === 'th' ? it.name_th : tr.name || it.name_th,
+      nameIsThai: lang === 'th' || !tr.name,
+      descIsThai: lang === 'th' || !tr.desc,
+      sectionIsThai: lang === 'th' || !tr.section,
       tDesc: lang === 'th' ? it.desc_th : tr.desc || it.desc_th,
       tSection: lang === 'th' ? it.section_th : tr.section || it.section_th,
     };
@@ -301,9 +305,9 @@ export function menuPage({ shop, items, lang, path }) {
 
   const itemHtml = (it) => `
 <div class="row${it.sold_out ? ' sold' : ''}">
-  <div class="top"><div class="name">${esc(it.tName)}</div><div class="price">${esc(priceText(it.price))}</div></div>
+  <div class="top"><div class="name"${it.nameIsThai ? ' lang="th"' : ''}>${esc(it.tName)}</div><div class="price">${esc(priceText(it.price))}</div></div>
   ${lang !== 'th' ? `<div class="orig" lang="th">${esc(it.name_th)}</div>` : ''}
-  ${it.tDesc ? `<div class="desc">${esc(it.tDesc)}</div>` : ''}
+  ${it.tDesc ? `<div class="desc"${it.descIsThai ? ' lang="th"' : ''}>${esc(it.tDesc)}</div>` : ''}
   ${it.sold_out ? `<span class="status">${esc(ui.soldOut)}</span>` : ''}
 </div>`;
 
@@ -311,7 +315,7 @@ export function menuPage({ shop, items, lang, path }) {
   const groups = [];
   for (const it of view) {
     let g = groups.find((x) => x.key === it.section_th);
-    if (!g) groups.push((g = { key: it.section_th, title: it.tSection, items: [] }));
+    if (!g) groups.push((g = { key: it.section_th, title: it.tSection, thai: it.sectionIsThai, items: [] }));
     g.items.push(it);
   }
 
@@ -327,14 +331,14 @@ export function menuPage({ shop, items, lang, path }) {
     lang,
     head: `<meta name="robots" content="noindex">`,
     body: `<main class="app">
-<nav class="lang-switch" aria-label="Language">${langLinks}</nav>
-<h1>${esc(shopName)}</h1>
+<nav class="lang-switch" aria-label="${esc(ui.language)}">${langLinks}</nav>
+<h1${shopName === shop.name_th ? ' lang="th"' : ''}>${esc(shopName)}</h1>
 ${lang !== 'th' && shopName !== shop.name_th ? `<p class="orig muted" lang="th">${esc(shop.name_th)}</p>` : ''}
 ${shop.updated_at ? `<p class="hint">${icon('refresh')}<span>${esc(freshness(ui, shop.updated_at))}</span></p>` : ''}
 ${ui.point ? `<p class="hint">${icon('pointer')}<span>${esc(ui.point)}</span></p>` : ''}
 ${special ? `<section class="highlight"><div class="tag-word">${icon('star')}<span>${esc(ui.special)}</span></div>${itemHtml(special)}</section>` : ''}
 ${groups
-  .map((g) => `${g.title ? `<h2 class="section-heading">${esc(g.title)}</h2>` : ''}${g.items.map((it) => itemHtml(it)).join('')}`)
+  .map((g) => `${g.title ? `<h2 class="section-heading"${g.thai ? ' lang="th"' : ''}>${esc(g.title)}</h2>` : ''}${g.items.map((it) => itemHtml(it)).join('')}`)
   .join('')}
 <footer class="app-footer caption">${mark()}${esc(ui.prices)}${ui.auto ? ` · ${esc(ui.auto)}` : ''}</footer>
 </main>`,
@@ -363,10 +367,13 @@ export function signPage({ shop, menuUrl, qrSvg }) {
     <h1 lang="th">${esc(shop.name_th)}</h1>
     ${shopTr.en && shopTr.en !== shop.name_th ? `<div class="sheet-en" lang="en">${esc(shopTr.en)}</div>` : ''}
   </div>
-  <div class="sheet-langs">${icon('globe', { cls: 'icon-lg' })}${FLAGS.map((f) => `<img src="/flags/${f}.svg" alt="">`).join('')}</div>
-  <div class="sheet-qr">${qrSvg}</div>
+  <div class="sheet-langs" aria-hidden="true">${icon('globe', { cls: 'icon-lg' })}${FLAGS.map((f) => `<img src="/flags/${f}.svg" alt="">`).join('')}</div>
+  <div class="scan-frame">
+    <div class="scan-tab">${icon('calendar', { cls: 'icon-lg' })}<span lang="en">Scan me</span><span lang="th">สแกนเลย</span></div>
+    <div class="sheet-qr">${qrSvg}</div>
+    <div class="scan-note">${icon('refresh')}<span lang="en">Today’s list, kept up to date by the vendor</span><span lang="th">รายการวันนี้ อัปเดตโดยร้าน</span></div>
+  </div>
   <div class="sheet-lines">${lines}</div>
-  <p class="sheet-live">${icon('refresh')}<span lang="en">Live list · the vendor keeps it up to date</span><span lang="th">รายการอัปเดตโดยร้านค้า</span></p>
   <div class="sheet-foot">${lockup('logo-lockup')}<div class="caption">${esc(menuUrl)}</div></div>
 </div>`,
   });

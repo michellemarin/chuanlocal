@@ -1,14 +1,17 @@
 import { Hono } from 'hono';
 import QRCode from 'qrcode';
-import { homePage } from './home.js';
+import { getStartedPage, homePage } from './home.js';
 import { HOME_LANGS } from './home-copy.js';
 import { pickLang } from './i18n.js';
 import { editPage, menuPage, notFoundPage, signPage, startPage } from './pages.js';
-import { LANGS, translateStrings } from './translate.js';
+import { LANGS, key, translateStrings } from './translate.js';
 
 const app = new Hono();
 
 const MAX_ITEMS = 200;
+// Bump when the translation prompt changes, so saved lists are re-translated on their next save.
+const TR_VERSION = 2;
+const KIND = { name: 'name', desc: 'desc', section: 'section', shop: 'shop' };
 const TYPES = ['food', 'service', 'shop'];
 
 function randomToken(bytes, alphabet) {
@@ -44,6 +47,11 @@ app.get('/', (c) => {
   const lang = pickLang(c.req.query('lang'), c.req.header('accept-language'), HOME_LANGS, 'th');
   const exampleLang = LANGS.includes(lang) ? lang : 'en';
   return html(c, homePage({ lang, exampleUrl: `/m/${EXAMPLE_SLUG}?lang=${exampleLang}` }));
+});
+
+app.get('/get-started', (c) => {
+  const lang = pickLang(c.req.query('lang'), c.req.header('accept-language'), HOME_LANGS, 'th');
+  return html(c, getStartedPage({ lang }));
 });
 
 app.get('/start', (c) => html(c, startPage()));
@@ -117,17 +125,17 @@ app.post('/api/:secret/save', async (c) => {
 
   // Work out which Thai text needs (re)translating.
   const shopTr = JSON.parse(shop.name_tr || '{}');
-  const shopNeeds = name !== shop.name_th || LANGS.some((l) => !shopTr[l]);
-  const toTranslate = shopNeeds ? [name] : [];
+  const shopNeeds = name !== shop.name_th || LANGS.some((l) => !shopTr[l]) || shopTr._v !== TR_VERSION;
+  const toTranslate = shopNeeds ? [{ kind: 'shop', text: name }] : [];
   for (const it of incoming) {
     const prev = it.id != null ? existing.get(it.id) : null;
-    it.src = JSON.stringify([it.section, it.name, it.desc]);
+    it.src = JSON.stringify([TR_VERSION, it.section, it.name, it.desc]);
     const prevTr = prev ? JSON.parse(prev.tr || '{}') : {};
     if (prev && prev.src === it.src && LANGS.every((l) => prevTr[l])) {
       it.tr = prev.tr;
     } else {
       it.tr = null;
-      toTranslate.push(it.section, it.name, it.desc);
+      toTranslate.push({ kind: 'section', text: it.section }, { kind: 'name', text: it.name }, { kind: 'desc', text: it.desc });
     }
   }
 
@@ -140,7 +148,7 @@ app.post('/api/:secret/save', async (c) => {
       let ok = true;
       for (const [k, th] of Object.entries(fields)) {
         if (!th) out[k] = '';
-        else if (dict[l][th]) out[k] = dict[l][th];
+        else if (dict[l][key(KIND[k], th)]) out[k] = dict[l][key(KIND[k], th)];
         else ok = false;
       }
       if (ok) tr[l] = out;
@@ -149,7 +157,7 @@ app.post('/api/:secret/save', async (c) => {
   };
 
   const newShopTr = shopNeeds
-    ? Object.fromEntries(Object.entries(trFor({ name })).map(([l, v]) => [l, v.name]))
+    ? { ...Object.fromEntries(Object.entries(trFor({ shop: name })).map(([l, v]) => [l, v.shop])), _v: TR_VERSION }
     : shopTr;
   for (const it of incoming) {
     if (!it.tr) it.tr = JSON.stringify(trFor({ name: it.name, desc: it.desc, section: it.section }));

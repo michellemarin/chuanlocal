@@ -7,7 +7,6 @@ const WIDTHS = [640, 1024, 1600, 2400];
 // breakpoint.lg from tokens.json (media conditions can't read CSS variables).
 const BP_LG = 1024;
 const half = `(min-width: ${BP_LG}px) 50vw, 100vw`;
-const twoFifths = `(min-width: ${BP_LG}px) 40vw, 100vw`;
 const src = (id, w) => `https://images.unsplash.com/${id}?auto=format&fit=crop&q=70&w=${w}`;
 
 function photo(key, { sizes = '100vw', eager = false, parallax = true } = {}) {
@@ -30,7 +29,7 @@ export function homePage({ lang, exampleUrl }) {
     .map((p) => `<a href="${p.page}?utm_source=chuanlocal&utm_medium=referral" rel="noopener">${esc(p.by)}</a>`)
     .join(', ');
 
-  const head = `<script>try{if(!localStorage.getItem('cl-seen-splash')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('anim')}}catch(e){}</script>
+  const head = `<script>try{if(!localStorage.getItem('cl-seen-splash')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('anim');setTimeout(function(){document.documentElement.classList.remove('anim','splashing')},4000)}}catch(e){}</script>
 <link rel="alternate" hreflang="x-default" href="/">
 ${HOME_LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${q(l)}">`).join('')}
 <meta name="description" content="${esc(c.heroSub)}">
@@ -46,9 +45,14 @@ ${HOME_LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${q(l)}">`)
 
 <header class="site-header">
   <a class="brand" href="${q(lang)}" aria-label="ChuanLocal">${lockup()}</a>
-  <a class="btn btn-primary" href="/start">${esc(c.headerCta)}</a>
+  <details class="nav">
+    <summary class="nav-toggle" aria-label="${esc(c.menu)}">${icon('menu', { cls: 'icon-lg' })}</summary>
+    <div class="nav-panel">
+      <nav class="lang-switch" aria-label="${esc(c.lang)}">${langLinks}</nav>
+      <a class="btn btn-primary" href="/get-started?lang=${lang}">${esc(c.getStarted)} ${icon('arrow', { cls: 'icon icon-arrow' })}</a>
+    </div>
+  </details>
 </header>
-<nav class="lang-switch site-langs" aria-label="${esc(c.lang)}">${icon('globe')}${langLinks}</nav>
 
 <main>
   <section class="hero on-navy">
@@ -59,7 +63,7 @@ ${HOME_LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${q(l)}">`)
       <h1>${esc(c.heroTitle)}</h1>
       <p class="lede">${esc(c.heroSub)}</p>
       <div class="btn-row">
-        <a class="btn btn-primary" href="/start">${esc(c.ctaStart)} ${icon('arrow')}</a>
+        <a class="btn btn-primary" href="/get-started?lang=${lang}">${esc(c.getStarted)} ${icon('arrow', { cls: 'icon icon-arrow' })}</a>
         <a class="btn btn-secondary" href="${esc(exampleUrl)}">${icon('eye')} ${esc(c.ctaExample)}</a>
       </div>
     </div>
@@ -69,47 +73,56 @@ ${HOME_LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${q(l)}">`)
     <p>${esc(c.intro)}</p>
   </section>
 
-  <section class="story">
+  <section class="split">
     ${photo('problem', { sizes: half })}
-    <div class="story-text">
+    <div class="split-text">
       <p class="overline">${esc(c.s1Over)}</p>
       <h2>${esc(c.s1Title)}</h2>
       <p>${esc(c.s1Body)}</p>
     </div>
   </section>
 
-  <section class="story flip">
+  <section class="split flip alt">
     ${photo('idea', { sizes: half })}
-    <div class="story-text">
+    <div class="split-text">
       <p class="overline">${esc(c.s2Over)}</p>
       <h2>${esc(c.s2Title)}</h2>
       <p>${esc(c.s2Body)}</p>
     </div>
   </section>
 
-  <section class="story">
+  <section class="split">
     ${photo('origin', { sizes: half })}
-    <div class="story-text">
+    <div class="split-text">
       <p class="overline">${esc(c.s3Over)}</p>
       <h2>${esc(c.s3Title)}</h2>
       <p>${esc(c.s3Body)}</p>
     </div>
   </section>
 
-  <section class="how" id="vendors">
-    ${photo('vendors', { sizes: twoFifths })}
-    <div class="how-text">
+  <section class="quote on-navy">
+    ${photo('quote')}
+    <div class="scrim"></div>
+    <figure class="quote-content">
+      <blockquote><p>${esc(c.quote)}</p></blockquote>
+      <figcaption>${esc(c.quoteSub)}</figcaption>
+    </figure>
+  </section>
+
+  <section class="split flip alt" id="vendors">
+    ${photo('vendors', { sizes: half })}
+    <div class="split-text">
       <p class="overline">${esc(c.vOver)}</p>
       <h2>${esc(c.vTitle)}</h2>
       ${steps(c.vSteps)}
       <p class="caption">${esc(c.vNote)}</p>
-      <a class="btn btn-primary" href="/start">${esc(c.vCta)} ${icon('arrow')}</a>
+      <a class="btn btn-primary" href="/start">${esc(c.vCta)} ${icon('arrow', { cls: 'icon icon-arrow' })}</a>
     </div>
   </section>
 
-  <section class="how flip subtle" id="visitors">
-    ${photo('visitors', { sizes: twoFifths })}
-    <div class="how-text">
+  <section class="split" id="visitors">
+    ${photo('visitors', { sizes: half })}
+    <div class="split-text">
       <p class="overline">${esc(c.tOver)}</p>
       <h2>${esc(c.tTitle)}</h2>
       ${steps(c.tSteps)}
@@ -118,13 +131,11 @@ ${HOME_LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${q(l)}">`)
   </section>
 
   <section class="final on-navy">
-    ${photo('final')}
-    <div class="scrim"></div>
     <div class="final-content">
       ${mark('logo-mark', '')}
       <h2>${esc(c.finalTitle)}</h2>
       <p>${esc(c.finalBody)}</p>
-      <a class="btn btn-primary" href="/start">${esc(c.finalCta)} ${icon('arrow')}</a>
+      <a class="btn btn-primary" href="/get-started?lang=${lang}">${esc(c.getStarted)} ${icon('arrow', { cls: 'icon icon-arrow' })}</a>
     </div>
   </section>
 </main>
@@ -134,5 +145,24 @@ ${HOME_LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${q(l)}">`)
   <p>${esc(c.footer)}</p>
   <p class="caption">${esc(c.photos)} ${credits}</p>
 </footer>`,
+  });
+}
+
+export function getStartedPage({ lang }) {
+  const c = COPY[lang];
+  const card = (href, ic, title, sub, l) =>
+    `<a class="path-card" href="${href}">${icon(ic, { cls: 'icon-lg' })}<span><strong>${esc(title)}</strong><span class="muted">${esc(sub)}</span></span>${icon('arrow', { cls: 'icon icon-arrow' })}</a>`;
+  return layout({
+    title: `${c.getStarted} · ChuanLocal`,
+    lang,
+    css: ['/app.css', '/home.css'],
+    body: `<main class="app get-started">
+<header class="app-header"><a href="/?lang=${lang}" aria-label="ChuanLocal">${lockup()}</a></header>
+<h1>${esc(c.gsTitle)}</h1>
+<div class="paths">
+  ${card('/start', 'bag', c.gsVendor, c.gsVendorSub)}
+  ${card(`/?lang=${lang}#visitors`, 'qr', c.gsVisitor, c.gsVisitorSub)}
+</div>
+</main>`,
   });
 }

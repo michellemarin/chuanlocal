@@ -14,6 +14,7 @@ export const LANG_LABELS = {
 export const UI = {
   en: {
     updated: ['Updated today', 'Updated yesterday', (n) => `Updated ${n} days ago`],
+    language: 'Language',
     special: "Today's special",
     soldOut: 'Sold out',
     point: 'To order, show the Thai name to the vendor',
@@ -23,6 +24,7 @@ export const UI = {
   },
   zh: {
     updated: ['今天已更新', '昨天已更新', (n) => `${n} 天前更新`],
+    language: '语言',
     special: '今日推荐',
     soldOut: '已售完',
     point: '点单时请向店家出示泰文名称',
@@ -32,6 +34,7 @@ export const UI = {
   },
   ko: {
     updated: ['오늘 업데이트됨', '어제 업데이트됨', (n) => `${n}일 전 업데이트됨`],
+    language: '언어',
     special: '오늘의 추천',
     soldOut: '품절',
     point: '주문할 때 태국어 이름을 보여주세요',
@@ -41,6 +44,7 @@ export const UI = {
   },
   ja: {
     updated: ['今日更新', '昨日更新', (n) => `${n}日前に更新`],
+    language: '言語',
     special: '本日のおすすめ',
     soldOut: '売り切れ',
     point: '注文時はタイ語の名前をお店の人に見せてください',
@@ -50,6 +54,7 @@ export const UI = {
   },
   ru: {
     updated: ['Обновлено сегодня', 'Обновлено вчера', (n) => `Обновлено ${n} дн. назад`],
+    language: 'Язык',
     special: 'Предложение дня',
     soldOut: 'Нет в наличии',
     point: 'Чтобы заказать, покажите продавцу название на тайском',
@@ -59,6 +64,7 @@ export const UI = {
   },
   de: {
     updated: ['Heute aktualisiert', 'Gestern aktualisiert', (n) => `Vor ${n} Tagen aktualisiert`],
+    language: 'Sprache',
     special: 'Tagesangebot',
     soldOut: 'Ausverkauft',
     point: 'Zum Bestellen den thailändischen Namen zeigen',
@@ -68,6 +74,7 @@ export const UI = {
   },
   fr: {
     updated: ['Mis à jour aujourd’hui', 'Mis à jour hier', (n) => `Mis à jour il y a ${n} jours`],
+    language: 'Langue',
     special: 'Offre du jour',
     soldOut: 'Épuisé',
     point: 'Pour commander, montrez le nom en thaï',
@@ -77,6 +84,7 @@ export const UI = {
   },
   th: {
     updated: ['อัปเดตวันนี้', 'อัปเดตเมื่อวาน', (n) => `อัปเดตเมื่อ ${n} วันก่อน`],
+    language: 'ภาษา',
     special: 'พิเศษวันนี้',
     soldOut: 'หมด',
     point: '',

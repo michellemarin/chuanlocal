@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ChuanLocal · Demo slides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ChuanLocal brand guide: Chuan Navy + white, one clay accent per slide, Poppins (Latin) + Prompt (Thai). */
+  :root { color-scheme: light; --navy:#00145E; --clay:#B5502B; --ink:#00145E; --gray:#5b6180; --line:#d6d9e4; --page:#ffffff; }
+  :root[data-theme="dark"] { color-scheme: dark; --ink:#ffffff; --gray:#aab2d4; --line:#27336e; --page:#00145E; }
+  *,*::before,*::after { box-sizing:border-box; }
+  html,body { margin:0; height:100%; background:var(--page); color:var(--ink); }
+  body { font-family:"Poppins","Prompt","Avenir Next",-apple-system,Helvetica,sans-serif; -webkit-font-smoothing:antialiased; overflow:hidden; transition:background-color .3s ease,color .3s ease; }
+  .thai { font-family:"Prompt","Poppins",sans-serif; }
+  svg.logo { fill:currentColor; display:block; }
+
+  .slide { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; padding:0 max(8vw,48px); opacity:0; visibility:hidden; transition:opacity .45s ease, visibility .45s; }
+  .slide.active { opacity:1; visibility:visible; }
+  .inner { max-width:1120px; width:100%; }
+
+  .eyebrow::before { content:''; display:inline-block; width:.5em; height:.5em; border-radius:50%; background:var(--clay); margin-right:.6em; vertical-align:middle; }
+  .eyebrow { font-size:clamp(12px,1.05vw,15px); font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--gray); margin:0 0 3.2vh; }
+  h2 { font-size:clamp(34px,4.6vw,66px); font-weight:700; letter-spacing:-.01em; line-height:1.1; margin:0 0 3.5vh; max-width:17ch; text-wrap:balance; }
+  .lede { font-size:clamp(19px,1.8vw,26px); line-height:1.55; max-width:36ch; margin:0; text-wrap:pretty; }
+  .accent { text-decoration:underline; text-decoration-color:var(--clay); text-decoration-thickness:.08em; text-underline-offset:.12em; }
+  
+  .statement { font-size:clamp(21px,2.2vw,31px); font-weight:500; line-height:1.4; border-left:3px solid var(--clay); padding:4px 0 4px 28px; margin:0; max-width:32ch; text-wrap:balance; }
+  .rule { border-top:1px solid var(--line); margin:5vh 0 0; padding-top:3vh; font-size:clamp(14px,1.15vw,17px); color:var(--gray); }
+
+  /* Title */
+  .lockup { width:min(52vw,640px); height:auto; margin:0 0 5vh; }
+  .welcome { font-size:clamp(28px,3.6vw,52px); font-weight:700; letter-spacing:-.01em; line-height:1.15; margin:0 0 2.2vh; }
+  .chuan { font-size:clamp(16px,1.5vw,21px); color:var(--gray); margin:0; }
+  .chuan .thai { color:var(--ink); font-weight:600; font-size:1.25em; margin-right:.3em; }
+
+  /* How it works */
+  .split { display:grid; grid-template-columns:1.25fr 1fr; gap:6vw; align-items:center; }
+  .steps { list-style:none; margin:0; padding:0; border-top:1px solid var(--line); }
+  .steps li { display:grid; grid-template-columns:3em 1fr; align-items:baseline; padding:2.3vh 0; border-bottom:1px solid var(--line); }
+  .steps .n { font-size:clamp(14px,1.15vw,17px); font-weight:600; color:var(--gray); font-variant-numeric:tabular-nums; }
+  .steps .t { font-size:clamp(21px,2.1vw,30px); font-weight:600; }
+  .steps .d { display:block; font-size:clamp(15px,1.25vw,18px); font-weight:400; color:var(--gray); margin-top:4px; }
+  .qr { background:#fff; border:1px solid #d6d9e4; border-radius:16px; padding:clamp(18px,2vw,28px); width:min(30vw,340px); justify-self:end; text-align:center; color:#00145E; }
+  .qr svg { display:block; width:100%; height:auto; }
+  .qr p { margin:14px 0 0; font-size:clamp(13px,1.05vw,15px); color:#5b6180; }
+
+  /* Next */
+  .checks { display:grid; grid-template-columns:repeat(3,1fr); gap:3vw; border-top:1px solid var(--line); padding-top:3vh; }
+  .checks h3 { font-size:clamp(18px,1.6vw,23px); font-weight:600; margin:0 0 8px; }
+  .checks p { font-size:clamp(14px,1.2vw,18px); color:var(--gray); margin:0; line-height:1.5; }
+
+  .bar { position:fixed; left:0; right:0; bottom:0; display:flex; justify-content:space-between; align-items:center; padding:18px max(8vw,48px); font-size:13px; color:var(--gray); z-index:5; }
+  .bar .mark { width:26px; height:26px; color:var(--ink); }
+  .bar button { font:inherit; color:inherit; background:none; border:1px solid var(--line); border-radius:999px; padding:6px 12px; cursor:pointer; }
+  .dots { display:flex; gap:8px; }
+  .dots span { width:6px; height:6px; border-radius:50%; background:var(--line); transition:background .3s; }
+  .dots span.on { background:var(--ink); }
+
+  @media (max-width:760px) { .split,.checks { grid-template-columns:1fr; } .qr { justify-self:start; width:min(60vw,260px); } }
+  @media print {
+    @page { size:1600px 900px; margin:0; }
+    html,body { overflow:visible; height:auto; }
+    .bar { display:none; }
+    .slide { position:relative; opacity:1; visibility:visible; width:1600px; height:900px; break-after:page; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 1. Title -->
+<section class="slide active">
+  <div class="inner">
+    <p class="eyebrow">Claude Impact Lab Chiang Mai · 26–27 September 2026</p>
+    <svg class="logo lockup" role="img" aria-label="ChuanLocal" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 365.93 81.5"><path d="M98.6,42.04c0-9.31,6.91-16.4,16.4-16.4,7.77,0,13.69,4.88,15.41,11.75h-8.22c-1.27-2.76-3.84-4.43-7.18-4.43-5.24,0-8.63,3.8-8.63,9.08s3.39,9.08,8.63,9.08c3.34,0,5.92-1.67,7.18-4.43h8.22c-1.72,6.87-7.63,11.75-15.41,11.75-9.49,0-16.4-7.09-16.4-16.4Z"/><path d="M134.26,23.06h7.68v12.74c1.81-2.21,4.11-3.39,7.18-3.39,5.51,0,8.9,3.84,8.9,9.89v15.54h-7.68v-13.83c0-2.71-.81-4.29-3.89-4.29s-4.52,1.49-4.52,4.92v13.19h-7.68V23.06Z"/><path d="M185.54,33v24.85h-7.68v-2.85c-1.81,2.26-4.11,3.43-7.14,3.43-5.46,0-8.85-3.84-8.85-9.9v-15.54h7.68v13.83c0,2.71.81,4.29,3.84,4.29s4.47-1.49,4.47-4.92v-13.19h7.68Z"/><path d="M188.93,45.43c0-7.73,4.97-13.01,11.16-13.01,3.16,0,5.51,1.36,7.09,3.39v-2.8h7.68l-.04,24.85h-7.68v-2.67c-1.58,1.94-3.84,3.25-7,3.25-6.33,0-11.21-5.33-11.21-13.01ZM207.19,45.43c0-3.43-2.26-5.69-5.24-5.69s-5.24,2.26-5.24,5.69,2.3,5.69,5.24,5.69,5.24-2.21,5.24-5.69Z"/><path d="M219.16,33h7.68v2.8c1.81-2.21,4.11-3.39,7.18-3.39,5.6,0,8.99,3.84,8.99,9.89v15.54h-7.68v-13.83c0-2.71-.82-4.29-3.93-4.29s-4.56,1.49-4.56,4.92v13.19h-7.68v-24.85Z"/><path d="M255.67,50.53h12.83v7.32h-20.51v-31.63h7.68v24.31Z"/><path d="M297.24,45.43c0,7.5-5.74,13.01-13.01,13.01s-13.01-5.56-13.01-13.01,5.83-13.01,13.01-13.01,13.01,5.51,13.01,13.01ZM278.99,45.43c0,3.48,2.3,5.69,5.24,5.69s5.24-2.21,5.24-5.69-2.26-5.69-5.24-5.69-5.24,2.26-5.24,5.69Z"/><path d="M300.19,45.43c0-7.36,5.42-13.01,13.06-13.01,6.19,0,11.75,3.75,12.51,10.39h-7.91c-.59-2.39-2.58-3.3-4.61-3.3-3.39,0-5.29,2.44-5.29,5.92s2.03,5.92,5.24,5.92c2.08,0,4.07-.99,4.65-3.34h7.91c-.81,6.87-6.51,10.44-12.56,10.44-7.59,0-13.01-5.65-13.01-13.01Z"/><path d="M328.02,45.43c0-7.73,4.97-13.01,11.16-13.01,3.16,0,5.51,1.36,7.09,3.39v-2.8h7.68l-.04,24.85h-7.68v-2.67c-1.58,1.94-3.84,3.25-7,3.25-6.32,0-11.2-5.33-11.2-13.01ZM346.27,45.43c0-3.43-2.26-5.69-5.24-5.69s-5.24,2.26-5.24,5.69,2.3,5.69,5.24,5.69,5.24-2.21,5.24-5.69Z"/><path d="M358.25,23.06h7.68v34.79h-7.68V23.06Z"/><path d="M56.14,44.44c-1.67,6.96-7.93,12.16-15.39,12.16-8.74,0-15.85-7.11-15.85-15.84s7.11-15.85,15.85-15.85c7.47,0,13.73,5.2,15.39,12.16h25.18C79.45,16.32,61.98,0,40.75,0,18.28,0,0,18.28,0,40.75s18.28,40.75,40.75,40.75c21.23,0,38.7-16.32,40.58-37.06h-25.18ZM60.43,31.27c-3.54-7.31-11.03-12.36-19.68-12.36-12.05,0-21.85,9.8-21.85,21.85s9.8,21.84,21.85,21.84c8.65,0,16.14-5.05,19.67-12.36h4.09c-3.78,9.43-13,16.1-23.76,16.1-14.11,0-25.59-11.48-25.59-25.59s11.48-25.59,25.59-25.59c10.76,0,19.99,6.68,23.76,16.11h-4.08ZM40.75,75.5c-19.16,0-34.75-15.59-34.75-34.75S21.59,6,40.75,6c15.87,0,29.29,10.7,33.42,25.27h-3.29c-4.04-12.8-16.02-22.11-30.14-22.11-17.42,0-31.59,14.17-31.59,31.59s14.17,31.59,31.59,31.59c14.11,0,26.09-9.31,30.13-22.1h3.29c-4.14,14.56-17.55,25.26-33.42,25.26Z"/></svg>
+    <p class="welcome">Welcome, in your language.</p>
+    <p class="chuan"><span class="thai" lang="th">ชวน</span>(chuan) means “to invite.” Every sign is an invitation.</p>
+  </div>
+</section>
+
+<!-- 2. The problem -->
+<section class="slide">
+  <div class="inner">
+    <p class="eyebrow">The problem</p>
+    <h2>A lost sale looks like a <span class="accent">quiet day.</span></h2>
+    <p class="lede">Visitors can’t read Thai-only signs, so they point, guess or walk past. The vendor never sees the sale they lost.</p>
+  </div>
+</section>
+
+<!-- 3. The idea -->
+<section class="slide">
+  <div class="inner">
+    <p class="eyebrow">The idea</p>
+    <h2>The vendor’s Thai stays. Yours sits beside it.</h2>
+    <p class="statement">The vendor never leaves Thai. Visitors read the list in their own language, with the Thai underneath to point at.</p>
+  </div>
+</section>
+
+<!-- 4. How it works + live demo -->
+<section class="slide">
+  <div class="inner split">
+    <div>
+      <p class="eyebrow">How it works · Live demo</p>
+      <ol class="steps">
+        <li><span class="n">01</span><span class="t">Type the list in Thai<span class="d">On the vendor’s phone. No app, no account.</span></span></li>
+        <li><span class="n">02</span><span class="t">Put the sign on the wall<span class="d">One QR sign. One tap changes today’s special.</span></span></li>
+        <li><span class="n">03</span><span class="t">Scan to read it in your language<span class="d">Opens in the visitor’s phone language, Thai underneath.</span></span></li>
+      </ol>
+    </div>
+    <div class="qr">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path stroke="#00145E" d="M0 0.5h7m3 0h2m2 0h1m3 0h3m2 0h1m2 0h7M0 1.5h1m5 0h1m3 0h1m4 0h2m3 0h3m1 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h1m6 0h3m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m2 0h2m3 0h2m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h2m3 0h4m1 0h3m2 0h1m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h5m4 0h2m1 0h3m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h2m1 0h2m1 0h1m1 0h1m4 0h1m1 0h1M0 8.5h1m1 0h5m2 0h3m1 0h1m3 0h1m1 0h1m2 0h3m1 0h5M0 9.5h1m3 0h1m4 0h1m3 0h2m1 0h5m2 0h1m2 0h2m1 0h2m1 0h1M1 10.5h3m2 0h3m2 0h7m2 0h1m1 0h1m5 0h1m1 0h2M1 11.5h1m1 0h1m1 0h1m1 0h2m1 0h1m2 0h1m1 0h4m1 0h3m1 0h3m1 0h5M0 12.5h1m2 0h2m1 0h2m1 0h2m3 0h1m1 0h1m2 0h1m2 0h1m1 0h1m3 0h2m1 0h1M0 13.5h1m2 0h2m2 0h1m2 0h1m1 0h2m1 0h1m1 0h4m1 0h3m1 0h1m2 0h1m1 0h2M1 14.5h1m1 0h1m1 0h5m3 0h1m1 0h2m1 0h1m3 0h1m1 0h6m1 0h1M0 15.5h1m2 0h2m2 0h1m1 0h1m3 0h1m1 0h1m2 0h6m1 0h3m1 0h2M0 16.5h2m1 0h2m1 0h1m2 0h1m1 0h2m1 0h2m1 0h1m4 0h1m1 0h2m1 0h3m2 0h1M0 17.5h1m2 0h1m3 0h1m3 0h2m1 0h1m3 0h3m2 0h1m2 0h2m1 0h4M0 18.5h1m1 0h2m1 0h8m2 0h2m1 0h1m6 0h4m1 0h2M1 19.5h3m1 0h1m1 0h4m1 0h1m1 0h3m2 0h3m4 0h5m1 0h1M1 20.5h2m1 0h3m3 0h2m1 0h3m2 0h3m1 0h1m2 0h1m2 0h2m1 0h2M0 21.5h1m1 0h2m3 0h1m2 0h2m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m2 0h1m3 0h1m1 0h1M0 22.5h1m1 0h1m3 0h3m1 0h3m1 0h1m5 0h1m10 0h1M0 23.5h1m1 0h3m2 0h2m2 0h1m4 0h1m4 0h2m2 0h2m2 0h3M0 24.5h1m1 0h1m3 0h2m1 0h2m3 0h1m2 0h1m1 0h1m2 0h1m1 0h5m2 0h1M8 25.5h1m1 0h4m2 0h4m3 0h2m3 0h1m1 0h1m1 0h1M0 26.5h7m2 0h3m3 0h1m1 0h1m5 0h2m1 0h1m1 0h1m1 0h1M0 27.5h1m5 0h1m1 0h2m1 0h1m1 0h1m1 0h4m1 0h5m3 0h3M0 28.5h1m1 0h3m1 0h1m1 0h1m1 0h1m5 0h1m2 0h2m3 0h6m2 0h1M0 29.5h1m1 0h3m1 0h1m1 0h1m2 0h1m2 0h2m1 0h3m1 0h2m1 0h2m2 0h1m2 0h2M0 30.5h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m1 0h2m3 0h2m4 0h2m1 0h1M0 31.5h1m5 0h1m2 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h3m2 0h1m2 0h3M0 32.5h7m1 0h1m6 0h1m1 0h1m4 0h3m2 0h1m3 0h1"/></svg>
+
+
+      <p>Scan to try it: <span class="thai" lang="th">ข้าวซอยป้าศรี</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- 5. What's next -->
+<section class="slide">
+  <div class="inner">
+    <p class="eyebrow">What’s next</p>
+    <h2>Built in 22 hours. Next, <span class="accent">the street.</span></h2>
+    <div class="checks">
+      <div><h3>Ask five vendors</h3><p>“When a foreign customer can’t read your list, what happens?”</p></div>
+      <div><h3>Watch five visitors</h3><p>Do they point at the Thai, or reach for their camera app?</p></div>
+      <div><h3>Set up one in person</h3><p>The first sign goes on a wall with someone local.</p></div>
+    </div>
+    <p class="rule">Free for vendors and visitors. Built to help Chiang Mai, not to make money.</p>
+  </div>
+</section>
+
+<div class="bar">
+  <svg class="logo mark" role="img" aria-label="ChuanLocal" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 81.33 81.5"><path d="M56.14,44.44c-1.67,6.96-7.93,12.16-15.39,12.16-8.74,0-15.85-7.11-15.85-15.84s7.11-15.85,15.85-15.85c7.47,0,13.73,5.2,15.39,12.16h25.18C79.45,16.32,61.98,0,40.75,0,18.28,0,0,18.28,0,40.75s18.28,40.75,40.75,40.75c21.23,0,38.7-16.32,40.58-37.06h-25.18ZM60.43,31.27c-3.54-7.31-11.03-12.36-19.68-12.36-12.05,0-21.85,9.8-21.85,21.85s9.8,21.84,21.85,21.84c8.65,0,16.14-5.05,19.67-12.36h4.09c-3.78,9.43-13,16.1-23.76,16.1-14.11,0-25.59-11.48-25.59-25.59s11.48-25.59,25.59-25.59c10.76,0,19.99,6.68,23.76,16.11h-4.08ZM40.75,75.5c-19.16,0-34.75-15.59-34.75-34.75S21.59,6,40.75,6c15.87,0,29.29,10.7,33.42,25.27h-3.29c-4.04-12.8-16.02-22.11-30.14-22.11-17.42,0-31.59,14.17-31.59,31.59s14.17,31.59,31.59,31.59c14.11,0,26.09-9.31,30.13-22.1h3.29c-4.14,14.56-17.55,25.26-33.42,25.26Z"/></svg>
+  <div class="dots" id="dots"></div>
+  <span><button id="theme" type="button" aria-label="Toggle white and navy">◐</button> <span id="count"></span></span>
+</div>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const dots = document.getElementById('dots');
+  slides.forEach(() => dots.appendChild(document.createElement('span')));
+  let i = Math.min(Math.max(parseInt(location.hash.slice(1), 10) - 1 || 0, 0), slides.length - 1);
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    [...dots.children].forEach((d, k) => d.classList.toggle('on', k === i));
+    document.getElementById('count').textContent = (i + 1) + ' / ' + slides.length;
+    history.replaceState(null, '', '#' + (i + 1));
+  }
+  document.addEventListener('keydown', (e) => {
+    if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); show(i + 1); }
+    if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); show(i - 1); }
+    if (e.key === 'Home') show(0);
+    if (e.key === 'End') show(slides.length - 1);
+    if (e.key === 'f') document.documentElement.requestFullscreen?.();
+  });
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('button, a')) return;
+    show(e.clientX > innerWidth / 3 ? i + 1 : i - 1);
+  });
+  document.getElementById('theme').onclick = () => {
+    const r = document.documentElement;
+    r.dataset.theme = r.dataset.theme === 'dark' ? 'light' : 'dark';
+  };
+  show(i);
+</script>
+</body>
+</html>

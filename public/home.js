@@ -28,6 +28,17 @@
     }
   }
 
+  // ----- Navigation: always open on desktop (breakpoint.lg), a menu on phones -----
+  var nav = document.querySelector('details.nav');
+  if (nav && window.matchMedia) {
+    var BP_LG = parseFloat(css.getPropertyValue('--breakpoint-lg')) || 1024; // breakpoint.lg
+    var desktop = matchMedia('(min-width: ' + BP_LG + 'px)');
+    var sync = function () { nav.open = desktop.matches; };
+    sync();
+    if (desktop.addEventListener) desktop.addEventListener('change', sync);
+    document.addEventListener('click', function (e) { if (!desktop.matches && nav.open && !nav.contains(e.target)) nav.open = false; });
+  }
+
   // ----- Parallax: photos drift slower than the page -----
   if (reduce) return;
   var strength = parseFloat(css.getPropertyValue('--motion-parallax-strength')) || 0.18;

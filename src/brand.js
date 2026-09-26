@@ -7,7 +7,7 @@ const MARK_VIEWBOX = '0 0 81.33 81.5';
 const MARK_PATHS = ['M56.14,44.44c-1.67,6.96-7.93,12.16-15.39,12.16-8.74,0-15.85-7.11-15.85-15.84s7.11-15.85,15.85-15.85c7.47,0,13.73,5.2,15.39,12.16h25.18C79.45,16.32,61.98,0,40.75,0,18.28,0,0,18.28,0,40.75s18.28,40.75,40.75,40.75c21.23,0,38.7-16.32,40.58-37.06h-25.18ZM60.43,31.27c-3.54-7.31-11.03-12.36-19.68-12.36-12.05,0-21.85,9.8-21.85,21.85s9.8,21.84,21.85,21.84c8.65,0,16.14-5.05,19.67-12.36h4.09c-3.78,9.43-13,16.1-23.76,16.1-14.11,0-25.59-11.48-25.59-25.59s11.48-25.59,25.59-25.59c10.76,0,19.99,6.68,23.76,16.11h-4.08ZM40.75,75.5c-19.16,0-34.75-15.59-34.75-34.75S21.59,6,40.75,6c15.87,0,29.29,10.7,33.42,25.27h-3.29c-4.04-12.8-16.02-22.11-30.14-22.11-17.42,0-31.59,14.17-31.59,31.59s14.17,31.59,31.59,31.59c14.11,0,26.09-9.31,30.13-22.1h3.29c-4.14,14.56-17.55,25.26-33.42,25.26Z'];
 
 const svg = (viewBox, paths, cls, label) =>
-  `<svg class="${cls}" viewBox="${viewBox}" fill="currentColor" role="img" aria-label="${label}" focusable="false">${paths.map((d) => `<path d="${d}"/>`).join('')}</svg>`;
+  `<svg class="${cls}" viewBox="${viewBox}" fill="currentColor" ${label ? `role="img" aria-label="${label}"` : 'aria-hidden="true"'} focusable="false">${paths.map((d) => `<path d="${d}"/>`).join('')}</svg>`;
 
 export const lockup = (cls = 'logo-lockup') => svg(LOCKUP_VIEWBOX, LOCKUP_PATHS, cls, 'ChuanLocal');
 export const mark = (cls = 'logo-mark', label = 'ChuanLocal') => svg(MARK_VIEWBOX, MARK_PATHS, cls, label);
