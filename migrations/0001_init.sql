@@ -1,0 +1,25 @@
+CREATE TABLE shops (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  slug TEXT NOT NULL UNIQUE,
+  secret TEXT NOT NULL UNIQUE,
+  type TEXT NOT NULL,
+  name_th TEXT NOT NULL,
+  name_tr TEXT NOT NULL DEFAULT '{}',
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE items (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  shop_id INTEGER NOT NULL REFERENCES shops(id) ON DELETE CASCADE,
+  sort INTEGER NOT NULL DEFAULT 0,
+  section_th TEXT NOT NULL DEFAULT '',
+  name_th TEXT NOT NULL,
+  desc_th TEXT NOT NULL DEFAULT '',
+  price TEXT NOT NULL DEFAULT '',
+  is_special INTEGER NOT NULL DEFAULT 0,
+  sold_out INTEGER NOT NULL DEFAULT 0,
+  src TEXT NOT NULL DEFAULT '',
+  tr TEXT NOT NULL DEFAULT '{}'
+);
+
+CREATE INDEX items_shop ON items(shop_id, sort);

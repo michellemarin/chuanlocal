@@ -1,0 +1,29 @@
+{
+  "name": "qrcode-magic",
+  "description": "Thai vendors type their menu in Thai; tourists scan a QR to read it in their language.",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:migrate": "wrangler d1 migrations apply qrcode-magic-db --remote",
+    "db:migrate:local": "wrangler d1 migrations apply qrcode-magic-db --local"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michellemarin/qrcode-magic.git"
+  },
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/michellemarin/qrcode-magic/issues"
+  },
+  "homepage": "https://github.com/michellemarin/qrcode-magic#readme",
+  "dependencies": {
+    "hono": "^4.13.9",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260926.1",
+    "wrangler": "^4.141.0"
+  },
+  "private": true
+}

@@ -1,0 +1,15 @@
+{
+  "name": "qrcode-magic",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "qrcode-magic-db",
+      "database_id": "7ee28cda-7d07-4481-9c75-f4eccb9d8b7d"
+    }
+  ],
+  "ai": { "binding": "AI" }
+}
