@@ -182,3 +182,6 @@ main h2:lang(zh), main h2:lang(ja), main h2:lang(ko), main :lang(zh) h2, main :l
 }
 .site-footer .caption a:hover::after, .site-footer .caption a:focus-visible::after { width: 100%; }
 @media (prefers-reduced-motion: reduce) { .site-footer .caption a::after { transition: none; } }
+
+/* Keep AAA on the warm panel: supporting text uses the primary navy there. */
+.split.alt .split-text > p:not(.overline), .split.alt .steps .d, .split.alt .steps .n { color: var(--color-foreground-primary); }
