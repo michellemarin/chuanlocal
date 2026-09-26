@@ -331,6 +331,7 @@ export function menuPage({ shop, items, lang, path }) {
     lang,
     head: `<meta name="robots" content="noindex">`,
     body: `<main class="app">
+<header class="app-header"><a href="/?lang=${lang}" aria-label="ChuanLocal">${lockup()}</a></header>
 <nav class="lang-switch" aria-label="${esc(ui.language)}">${langLinks}</nav>
 <h1${shopName === shop.name_th ? ' lang="th"' : ''}>${esc(shopName)}</h1>
 ${lang !== 'th' && shopName !== shop.name_th ? `<p class="orig muted" lang="th">${esc(shop.name_th)}</p>` : ''}
