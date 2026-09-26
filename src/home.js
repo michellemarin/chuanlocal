@@ -79,7 +79,7 @@ ${HOME_LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${q(l)}">`)
     <p>${esc(c.intro)}</p>
   </section>
 
-  <section class="split">
+  <section class="split alt">
     ${photo('problem', { sizes: half })}
     <div class="split-text">
       <p class="overline">${esc(c.s1Over)}</p>
@@ -88,7 +88,7 @@ ${HOME_LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${q(l)}">`)
     </div>
   </section>
 
-  <section class="split flip alt">
+  <section class="split flip">
     ${photo('idea', { sizes: half })}
     <div class="split-text">
       <p class="overline">${esc(c.s2Over)}</p>
@@ -97,7 +97,7 @@ ${HOME_LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${q(l)}">`)
     </div>
   </section>
 
-  <section class="split">
+  <section class="split alt">
     ${photo('origin', { sizes: half })}
     <div class="split-text">
       <p class="overline">${esc(c.s3Over)}</p>
@@ -115,7 +115,7 @@ ${HOME_LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${q(l)}">`)
     </figure>
   </section>
 
-  <section class="split flip alt" id="vendors">
+  <section class="split flip" id="vendors">
     ${photo('vendors', { sizes: half })}
     <div class="split-text">
       <p class="overline">${esc(c.vOver)}</p>
@@ -126,7 +126,7 @@ ${HOME_LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${q(l)}">`)
     </div>
   </section>
 
-  <section class="split" id="visitors">
+  <section class="split alt" id="visitors">
     ${photo('visitors', { sizes: half })}
     <div class="split-text">
       <p class="overline">${esc(c.tOver)}</p>
