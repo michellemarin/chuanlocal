@@ -188,3 +188,7 @@ main h2:lang(zh), main h2:lang(ja), main h2:lang(ko), main :lang(zh) h2, main :l
 
 /* Keep AAA on the warm panel: supporting text uses the primary navy there. */
 .split.alt .split-text > p:not(.overline), .split.alt .steps .d, .split.alt .steps .n { color: var(--color-foreground-primary); }
+
+/* "See an example" in For visitors: no border and no glow (owner). */
+.split .btn-secondary, .split .btn-secondary:hover { box-shadow: none; border-color: transparent; }
+.split .btn-secondary { background: var(--color-navy-50); }

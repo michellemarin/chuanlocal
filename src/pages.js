@@ -25,7 +25,7 @@ export function fontLinks(langs = []) {
 }
 
 // Bump on deploy so browsers fetch fresh CSS and JS.
-export const ASSET_V = '2026092703';
+export const ASSET_V = '2026092704';
 
 export function layout({ title, lang = 'th', body, head = '', fonts = [], css = ['/app.css'], theme = '' }) {
   return `<!doctype html><html lang="${esc(lang)}"${theme ? ` data-theme="${theme}"` : ''}><head><meta charset="utf-8">
