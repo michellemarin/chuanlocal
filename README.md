@@ -15,9 +15,14 @@ Built at Claude Impact Lab Chiang Mai, 26 and 27 September 2026.
 | Vendor guide | https://chuanlocal.michelle-c98.workers.dev/get-started |
 | Example visitor list | https://chuanlocal.michelle-c98.workers.dev/m/zk596ie?lang=en |
 | Slides | https://chuanlocal.michelle-c98.workers.dev/slides/ |
+| Vendor sign (PDF) | [docs/sign-example.pdf](docs/sign-example.pdf) |
 | Brand strategy | https://claude.ai/artifact/PCEmqXWD7JxDL1Dpo7bUhw |
 | Brand guidelines | https://claude.ai/artifact/UagKf1AkYv8sPSpdvJj21q |
 | Design system | https://claude.ai/artifact/43v13nBZYCSP4b25bMiRTL (tokens in [`design-system/`](design-system)) |
+
+## The vendor sign
+
+[![Vendor sign example. Click for the A4 PDF.](docs/sign-example.jpg)](docs/sign-example.pdf)
 
 ## What we built
 
